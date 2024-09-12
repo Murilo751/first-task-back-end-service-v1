@@ -6,32 +6,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "users")
 public class User implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
-    private String nome;
-    @Column(nullable = false)
-    private LocalDate dataNascimento;
+    private String name;
     @Column(nullable = false)
     private String email;
-
-    public User(String nome, LocalDate dataNascimento,  String email) {
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.email = email;
-    }
+    @Column(nullable = false)
+    private String password;
 
 }
