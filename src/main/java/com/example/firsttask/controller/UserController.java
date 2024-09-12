@@ -2,7 +2,6 @@ package com.example.firsttask.controller;
 
 import com.example.firsttask.entity.User;
 import com.example.firsttask.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
