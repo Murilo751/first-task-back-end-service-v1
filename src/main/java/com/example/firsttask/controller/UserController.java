@@ -6,10 +6,7 @@ import com.example.firsttask.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -18,18 +15,16 @@ import java.security.Principal;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
-
-    public registerEntity<User> registerEntity(@Validated @RequestBody User user) {
-        User registedUser = userService.registerUser(user);
-        return ResponseEntity.ok(registedUser);
+    @PostMapping("/register")
+    public ResponseEntity<User> registerUser(@Validated @RequestBody User user) {
+        User registeredUser = userService.registerUser(user);
+        return ResponseEntity.ok(registeredUser);
     }
 
-//    @GetMapping(value = "/user")
-//    Public List<User> getAllUsers() {
-//        return userRepository.findAll();
-//    };
-//
-//    @RequestMapping
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable(required = true) Long id) {
+        return userService.getUsersById(id)
+                .map(user -> registerUser(user))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    };
 }

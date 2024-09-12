@@ -28,18 +28,10 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    public User(String nome, LocalDate dataNascimento) {
+    public User(String nome, LocalDate dataNascimento,  String email) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
+        this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "Pessoa{"+
-                "id = "+ id +
-                ", nome = "+ nome + '/' +
-                ", dataNascimento = "+ dataNascimento +
-                ", email = "+ email +
-                "}";
-    }
 }
