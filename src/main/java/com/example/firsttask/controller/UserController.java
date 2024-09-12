@@ -4,13 +4,10 @@ import com.example.firsttask.entity.User;
 import com.example.firsttask.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping(value = "/api/users")
-@Validated
 public class UserController {
 
     private final UserService userService;

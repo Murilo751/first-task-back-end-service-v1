@@ -2,13 +2,10 @@ package com.example.firsttask.services;
 
 import com.example.firsttask.entity.User;
 import com.example.firsttask.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
