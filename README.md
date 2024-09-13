@@ -19,7 +19,7 @@ Você pode testar a API utilizando ferramentas como:
 #### Registra um usuario
 
 ```http
-  POST /api/users/register
+  POST /register
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
@@ -43,7 +43,7 @@ Código HTTP: 200 OK + Dados do usuario cadastrado
 #### Retorna um usuario
 
 ```http
-  GET /api/users/${id}
+  GET /${id}
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
@@ -58,7 +58,7 @@ Código HTTP: 200 OK + Dados do usuario buscado
 #### Retorna todos os usuarios
 
 ```http
-  GET /api/users/getAll
+  GET /getAll
 ```
 
 | Tipo       | Descrição                           |
@@ -73,7 +73,7 @@ Código HTTP: 200 OK + Dados do todos os usuarios
 #### Atualiza um usuario
 
 ```http
-  POST /api/users/${id}
+  POST /${id}
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
@@ -97,7 +97,7 @@ Código HTTP: 200 OK + Dados do usuario atualizado
 #### Deleta um usuario
 
 ```http
-  DELETE /api/users/${id}
+  DELETE /${id}
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
