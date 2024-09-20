@@ -73,7 +73,7 @@ Código HTTP: 200 OK + Dados do todos os usuarios
 #### Atualiza um usuario
 
 ```http
-  POST /${id}
+  PUT /${id}
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
