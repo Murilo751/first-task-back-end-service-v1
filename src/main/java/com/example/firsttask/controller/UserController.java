@@ -1,7 +1,7 @@
 package com.example.firsttask.controller;
 
 import com.example.firsttask.entity.User;
-import com.example.firsttask.dto.dtoEntity.UserDTO;
+import com.example.firsttask.dtoEntity.UserDTO;
 import com.example.firsttask.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,8 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
-        User user = userDTO.toDomain();
-        User registeredUser = userService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO.fromDomain(registeredUser));
+        User registeredUser = userService.registerUser(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO(registeredUser));
     }
 
     @GetMapping(value = "/{id}")

@@ -1,14 +1,17 @@
 package com.example.firsttask.services;
 
 import com.example.firsttask.entity.User;
-import com.example.firsttask.dto.dtoEntity.UserDTO;
+import com.example.firsttask.dtoEntity.UserDTO;
 import com.example.firsttask.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -17,14 +20,20 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User registerUser(User user) {return userRepository.save(user);}
-
-    public UserDTO getUsersById(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        return UserDTO.fromDomain(user);
+    public UserDTO registerUser(UserDTO userDTO) {
+        User user = convertToEntity(userDTO);
+        User savedUser = userRepository.save(user);
+        return convertToDTO(savedUser);
     }
 
-    public List<UserDTO> getAllUsers() {return userRepository.findAll();}
+    public UserDTO getUsersById(Long id) {
+        return userRepository.findById(id).map(u -> convertToDTO(u)).orElse(null);
+    }
+
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
 
     public User updateUser(User user, Long id) {
         Optional<User> userOptional = userRepository.findById(id);
@@ -46,10 +55,22 @@ public class UserService {
     }
 
     public UserDTO convertToDTO(User user){
-        return new UserDTO(user.getName(), user.getEmail(), user.getPassword());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPassword(user.getPassword());
+        return userDTO;
     }
 
-    public UserDTO convertToDTO(User user, UserDTO userDTO){}
+    public User convertToEntity(UserDTO userDTO){
+        User userEntity = new User();
+        userEntity.setId(userDTO.getId());
+        userEntity.setName(userDTO.getName());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setPassword(userDTO.getPassword());
+        return userEntity;
+    }
 
 
 }
