@@ -1,6 +1,5 @@
 package com.example.firsttask.controller;
 
-import com.example.firsttask.entity.User;
 import com.example.firsttask.dtoEntity.UserDTO;
 import com.example.firsttask.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -21,13 +20,13 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
-        User registeredUser = userService.registerUser(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO(registeredUser));
+        UserDTO registeredUser = userService.registerUser(userDTO);
+        return ResponseEntity.ok(registeredUser);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return userService.getUsersById(id)
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        return userService.getUsersById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")
@@ -36,12 +35,12 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.updateUser(user, id));
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUser(userDTO, id));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<User> deleteUserById(@PathVariable Long id){
+    public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long id){
         boolean itRemoved = userService.deleteUserById(id);
         if (itRemoved){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

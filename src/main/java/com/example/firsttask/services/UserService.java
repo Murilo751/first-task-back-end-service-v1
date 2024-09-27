@@ -4,21 +4,19 @@ import com.example.firsttask.entity.User;
 import com.example.firsttask.dtoEntity.UserDTO;
 import com.example.firsttask.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public UserDTO registerUser(UserDTO userDTO) {
         User user = convertToEntity(userDTO);
@@ -26,8 +24,8 @@ public class UserService {
         return convertToDTO(savedUser);
     }
 
-    public UserDTO getUsersById(Long id) {
-        return userRepository.findById(id).map(u -> convertToDTO(u)).orElse(null);
+    public Optional<UserDTO> getUsersById(Long id) {
+        return userRepository.findById(id).map(this::convertToDTO);
     }
 
     public List<UserDTO> getAllUsers() {
@@ -35,14 +33,15 @@ public class UserService {
         return users.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    public User updateUser(User user, Long id) {
+    public UserDTO updateUser(UserDTO userDTO, Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User updatedUser = userOptional.get();
-            updatedUser.setName(user.getName());
-            updatedUser.setEmail(user.getEmail());
-            updatedUser.setPassword(user.getPassword());
-            return userRepository.save(updatedUser);
+            updatedUser.setName(userDTO.getName());
+            updatedUser.setEmail(userDTO.getEmail());
+            updatedUser.setPassword(userDTO.getPassword());
+            User savedUser = userRepository.save(updatedUser);
+            return convertToDTO(savedUser);
         }
         return null;
     }
