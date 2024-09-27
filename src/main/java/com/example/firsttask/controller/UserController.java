@@ -1,6 +1,6 @@
 package com.example.firsttask.controller;
 
-import com.example.firsttask.entity.User;
+import com.example.firsttask.dtoEntity.UserDTO;
 import com.example.firsttask.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,30 +19,28 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
+    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
+        UserDTO registeredUser = userService.registerUser(userDTO);
         return ResponseEntity.ok(registeredUser);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) {
-        return userService.getUsersById(id)
-                .map(this::registerUser)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        return userService.getUsersById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.updateUser(user, id));
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUser(userDTO, id));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<User> deleteUserById(@PathVariable long id){
+    public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long id){
         boolean itRemoved = userService.deleteUserById(id);
         if (itRemoved){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
