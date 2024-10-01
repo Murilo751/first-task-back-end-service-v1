@@ -1,6 +1,6 @@
 package com.example.firsttask.controller;
 
-import com.example.firsttask.dtoEntity.UserDTO;
+import com.example.firsttask.model.dtoEntity.UserDTO;
 import com.example.firsttask.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.example.firsttask.services;
 
-import com.example.firsttask.entity.User;
-import com.example.firsttask.dtoEntity.UserDTO;
+import com.example.firsttask.model.entity.User;
+import com.example.firsttask.model.dtoEntity.UserDTO;
 import com.example.firsttask.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

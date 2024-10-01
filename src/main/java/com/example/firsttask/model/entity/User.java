@@ -1,4 +1,4 @@
-package com.example.firsttask.entity;
+package com.example.firsttask.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
