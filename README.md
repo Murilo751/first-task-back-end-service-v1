@@ -40,22 +40,36 @@ Código HTTP: 200 OK + Dados do usuario cadastrado
 
 ---
 
-#### Retorna um usuario
+#### Busca um usuario por ID
 
 ```http
-  GET /${id}
+  GET /findById/${id}
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `id`      | `string` | Endpoint para buscar um usuário específico pelo seu ID |
+| `id`      | `Long` | Endpoint para buscar um usuário específico pelo seu ID |
+
+##### Resposta esperada
+Código HTTP: 200 OK + Dados do usuario buscado
+
+---
+#### Busca um usuario por email
+
+```http
+  GET /findByEmail/${email}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `email`      | `string` | Endpoint para buscar um usuário específico pelo seu ID |
 
 ##### Resposta esperada
 Código HTTP: 200 OK + Dados do usuario buscado
 
 ---
 
-#### Retorna todos os usuarios
+#### Busca todos os usuarios
 
 ```http
   GET /getAll
@@ -78,7 +92,7 @@ Código HTTP: 200 OK + Dados do todos os usuarios
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `id`      | `string` | Endpoint para atualizar os dados de um usuário existente.|
+| `id`      | `Long` | Endpoint para atualizar os dados de um usuário existente.|
 
 ##### Exemplo
 ```http
@@ -102,7 +116,7 @@ Código HTTP: 200 OK + Dados do usuario atualizado
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `id`      | `string` | Endpoint para excluir um usuário do sistema.|
+| `id`      | `Long` | Endpoint para excluir um usuário do sistema.|
 
 ##### Resposta esperada
 Código HTTP: 204 No content + 1
