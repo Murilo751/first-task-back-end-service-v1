@@ -24,9 +24,14 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/findById/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         return userService.getUsersById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(value ="/findByEmail/{email}")
+    public ResponseEntity<UserDTO> getByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/getAll")

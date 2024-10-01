@@ -28,6 +28,11 @@ public class UserService {
         return userRepository.findById(id).map(this::convertToDTO);
     }
 
+    public Optional<UserDTO> getUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.map(this::convertToDTO);
+    }
+
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map(this::convertToDTO).collect(Collectors.toList());
