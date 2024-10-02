@@ -1,6 +1,6 @@
 package com.example.firsttask.auth;
 
-import com.example.firsttask.model.dtoEntity.UserDTO;
+import com.example.firsttask.model.entity.User;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.AuthenticationException;
@@ -24,9 +24,9 @@ public class JwtUtil {
         this.jwtParser = Jwts.parser().setSigningKey(secretKey);
     }
 
-    public String generateToken(UserDTO userDTO) {
-        Claims claims = Jwts.claims().setSubject(userDTO.getEmail());
-        claims.put("name", userDTO.getName());
+    public String generateToken(User user) {
+        Claims claims = Jwts.claims().setSubject(user.getEmail());
+        claims.put("name", user.getName());
         Date tokenCreationTime = new Date();
         Date tokenExpirationTime = new Date(tokenCreationTime.getTime() + TimeUnit.MINUTES.toMillis(tokenValidity));
         return Jwts.builder().setClaims(claims).setExpiration(tokenExpirationTime).signWith(SignatureAlgorithm.ES256, secretKey).compact();

@@ -5,6 +5,7 @@ import com.example.firsttask.model.dtoEntity.UserDTO;
 import com.example.firsttask.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -16,10 +17,12 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     public UserDTO registerUser(UserDTO userDTO) {
         User user = convertToEntity(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
     }
@@ -75,6 +78,5 @@ public class UserService {
         userEntity.setPassword(userDTO.getPassword());
         return userEntity;
     }
-
 
 }
