@@ -17,8 +17,8 @@ public class JwtUtil {
 
     private final JwtParser jwtParser;
 
-    private final String tokenPrefix = "Bearer ";
-    private final String tokenHeader = "Authorization";
+    private static final String tokenPrefix = "Bearer ";
+    private static final String tokenHeader = "Authorization";
 
     public JwtUtil() {
         this.jwtParser = Jwts.parser().setSigningKey(secretKey);
@@ -36,9 +36,9 @@ public class JwtUtil {
         return jwtParser.parseClaimsJws(token).getBody();
     }
 
-    public String resolveToken(HttpServletRequest request) {
+    public static String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(tokenHeader);
-        if (bearerToken !=null && bearerToken.startsWith(tokenPrefix)) {
+        if (bearerToken != null && bearerToken.startsWith(tokenPrefix)) {
             return bearerToken.substring(7);
         }
         return null;
@@ -51,10 +51,10 @@ public class JwtUtil {
                 return parseToken(token);
             }
             return null;
-        } catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             request.setAttribute("expired", e.getMessage());
             throw e;
-        } catch (Exception e){
+        } catch (Exception e) {
             request.setAttribute("invalid", e.getMessage());
             throw e;
         }
@@ -63,7 +63,7 @@ public class JwtUtil {
     public boolean validateClaims(Claims claims) throws AuthenticationException {
         try {
             return claims.getExpiration().before(new Date());
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }

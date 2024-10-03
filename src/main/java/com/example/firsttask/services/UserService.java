@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,8 +33,8 @@ public class UserService {
     }
 
     public Optional<UserDTO> getUserByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.map(this::convertToDTO);
+        Optional<UserDTO> userDTO = userRepository.findByEmail(email);
+        return userDTO;
     }
 
     public List<UserDTO> getAllUsers() {
@@ -54,14 +55,16 @@ public class UserService {
         return null;
     }
 
-    public boolean deleteUserById(Long id){
-        if (userRepository.existsById(id)){
+    public boolean deleteUserById(Long id) {
+        if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return true;
-        }else {return false;}
+        } else {
+            return false;
+        }
     }
 
-    public UserDTO convertToDTO(User user){
+    public UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
@@ -70,7 +73,7 @@ public class UserService {
         return userDTO;
     }
 
-    public User convertToEntity(UserDTO userDTO){
+    public User convertToEntity(UserDTO userDTO) {
         User userEntity = new User();
         userEntity.setId(userDTO.getId());
         userEntity.setName(userDTO.getName());

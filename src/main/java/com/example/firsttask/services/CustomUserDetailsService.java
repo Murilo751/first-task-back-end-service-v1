@@ -16,23 +16,24 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
-        UserDTO userDTO = convertToDTO(user.orElse(null));
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
-        return org.springframework.security.core.userdetails.User.builder().username(userDTO.getEmail()).password(userDTO.getPassword()).roles(roles.toArray(new String[0])).build();
+
+
+        UserDTO userDTO = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"+ email)) ;
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .roles(userDTO.getRoles().toArray(new String[0])).build();
     }
 
-    public UserDTO convertToDTO(User user){
+    public UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());

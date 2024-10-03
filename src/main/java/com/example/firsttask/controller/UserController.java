@@ -29,7 +29,7 @@ public class UserController {
         return userService.getUsersById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value ="/findByEmail/{email}")
+    @GetMapping(value = "/findByEmail/{email}")
     public ResponseEntity<UserDTO> getByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -45,11 +45,11 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long id){
+    public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long id) {
         boolean itRemoved = userService.deleteUserById(id);
-        if (itRemoved){
+        if (itRemoved) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
