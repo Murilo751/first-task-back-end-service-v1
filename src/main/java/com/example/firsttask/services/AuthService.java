@@ -1,6 +1,5 @@
 package com.example.firsttask.services;
 
-import com.example.firsttask.model.entity.User;
 import com.example.firsttask.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
